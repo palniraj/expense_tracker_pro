@@ -7,6 +7,7 @@ const express = require("express");
 
 const app = express();
 
+app.use(express.json());
 
 // end of all routes import errorhandler
 app.use(errorHandler);
