@@ -2,9 +2,11 @@
 // always express-async-errors on top
 require("express-async-errors");
 const express = require("express");
+const errorHandler = require("./handlers/errorHandler");
+
+require("dotenv").config();
 
 // create a server
-
 const app = express();
 
 app.use(express.json());
