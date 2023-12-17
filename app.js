@@ -17,6 +17,9 @@ mongoose
     console.log("Mongo connection failed!");
   });
 
+// Model initiallization
+require("./models/users.model");
+
 app.use(express.json());
 
 // end of all routes import errorhandler
