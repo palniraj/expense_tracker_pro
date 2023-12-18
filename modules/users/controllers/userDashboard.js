@@ -1,7 +1,17 @@
-const userDashboard = (req, res) =>{
-    console.log(req.user);
-    res.status(200).json({
-        status: "Hello from userRegister!"
-    });
-}
+const mongoose = require("mongoose");
+
+const userDashboard = async (req, res) => {
+  const usersModel = mongoose.model("users");
+  console.log(req.user);
+  const getUser = await usersModel
+    .findOne({
+      _id: req.user._id,
+    })
+    .select("-password");
+  // .select("name balace email");
+  res.status(200).json({
+    status: "success",
+    data: getUser,
+  });
+};
 module.exports = userDashboard;
