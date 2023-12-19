@@ -5,6 +5,7 @@ const express = require("express");
 const errorHandler = require("./handlers/errorHandler");
 const mongoose = require("mongoose");
 const userRoutes = require("./modules/users/users.routes");
+const transactionRoutes = require("./modules/transactions/transactions.routes");
 require("dotenv").config();
 
 // create a server
@@ -26,6 +27,7 @@ app.use(express.json());
 
 // Routes...
 app.use("/api/users", userRoutes);
+app.use("/api/transactions", transactionRoutes);
 
 // end of all routes import errorhandler
 app.use(errorHandler);
