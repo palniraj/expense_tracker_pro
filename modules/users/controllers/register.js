@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const jsonwebtoken = require("jsonwebtoken");
 
 const register = async (req, res) => {
   const usersModel = mongoose.model("users");
@@ -8,8 +9,7 @@ const register = async (req, res) => {
   // validating & throwing own custom exception
   if (!email) throw "Email must be provided!";
   if (!password) throw "Password must be provided!";
-  if (password.length < 5)
-    throw "Password must be at least 5 characters long.";
+  if (password.length < 5) throw "Password must be at least 5 characters long.";
   if (!name) throw "Name is required!";
   if (password !== confirm_password)
     throw "Password and confirm password doesnot match!";
@@ -19,17 +19,26 @@ const register = async (req, res) => {
   });
   if (getDuplicateEmail) throw "This email already exists!";
 
-const hashedPassword = await bcrypt.hash(password, 12);
+  const hashedPassword = await bcrypt.hash(password, 12);
 
-  await usersModel.create({
+ const createUser =  await usersModel.create({
     name: name,
     email: email,
     password: hashedPassword,
     balance: balance,
   });
 
+  const accessToken = await jsonwebtoken.sign(
+    {
+      _id: createUser._id,
+      name: createUser.name,
+    },
+    process.env.jwt_salt
+  );
+
   res.status(201).json({
     status: "User Registered Successfully!",
+    accessToken: accessToken
   });
 };
 
