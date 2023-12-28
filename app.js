@@ -2,6 +2,7 @@
 // always express-async-errors on top
 require("express-async-errors");
 const express = require("express");
+const cors = require("cors");
 const errorHandler = require("./handlers/errorHandler");
 const mongoose = require("mongoose");
 const userRoutes = require("./modules/users/users.routes");
@@ -10,6 +11,8 @@ require("dotenv").config();
 
 // create a server
 const app = express();
+app.use(cors());
+
 mongoose
   .connect(process.env.mongo_connection, {})
   .then(() => {
