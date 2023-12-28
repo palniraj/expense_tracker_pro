@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const emailManager = require("../../../managers/emailManager");
 const resetPassword = async (req, res) => {
   const usersModel = mongoose.model("users");
   const { email, new_password, reset_code } = req.body;
@@ -29,6 +30,14 @@ const resetPassword = async (req, res) => {
       runValidators: true,
     }
   );
+
+  await emailManager(
+    email,
+    "Your Password is reseted successfully! If you have not done that, please contact us!",
+    "Your Password is reseted successfully! If you have not done that, please contact us!",
+    "Password reset sucessfully!"
+  );
+
   res.status(200).json({
     status: "success",
     message: "Password reseted successfully!",
