@@ -43,6 +43,7 @@ const forgotPassword = async (req, res) => {
   });
   res.status(200).json({
     status: "success",
+    message: "Reset code send to your email!"
   });
 };
 module.exports = forgotPassword;
