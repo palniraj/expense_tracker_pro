@@ -12,6 +12,7 @@ const addIncome = async (req, res) => {
   // console.log(validator.isNumeric(amount.toString()));
   if (!validator.isNumeric(amount.toString()))
     throw "Amount must be a valid number!";
+    if(amount<0) throw "Amount must not be negative";
   //work with database
   await transactionsModel.create({
     user_id: req.user._id,
