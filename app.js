@@ -30,6 +30,12 @@ app.use("/api/users", userRoutes);
 app.use("/api/transactions", transactionRoutes);
 
 // end of all routes import errorhandler
+app.all("*", (req, res, next) => {
+  res.status(404).json({
+    status: "failed",
+    message: "Not found!",
+  });
+});
 app.use(errorHandler);
 app.listen(8000, () => {
   console.log("Server started successfully!");
